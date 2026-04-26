@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>きいちゃん — Lesson 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #fff5f8;
+    color: #222;
+    padding: 24px 16px 60px;
+    font-size: 11pt;
+  }
+
+  .wrap { max-width: 620px; margin: 0 auto; }
+
+  /* ヘッダー */
+  .page-header {
+    border-bottom: 3px solid #e8729a;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .school-name {
+    font-size: 9pt;
+    color: #c04878;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  .page-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20pt;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 2px;
+  }
+
+  .page-subtitle { font-size: 9pt; color: #c04878; }
+
+  .meta-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .meta-field {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10pt;
+  }
+
+  .meta-field label { color: #888; font-size: 9pt; white-space: nowrap; }
+
+  .meta-field input[type="text"] {
+    border: none;
+    border-bottom: 1.5px solid #ddd;
+    background: transparent;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 10pt;
+    color: #333;
+    width: 120px;
+    padding: 2px 4px;
+  }
+
+  .meta-field input:focus { outline: none; border-bottom-color: #e8729a; }
+
+  /* セクション */
+  .section { margin-bottom: 20px; }
+
+  .section-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #fff;
+    background: #e8729a;
+    padding: 5px 12px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+  }
+
+  .section-title.green  { background: #6ab36a; }
+  .section-title.blue   { background: #5b99cc; }
+  .section-title.orange { background: #e8963a; }
+
+  .point {
+    background: #fff0f5;
+    border-left: 3px solid #e8729a;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 10.5pt;
+    line-height: 1.8;
+  }
+
+  .point strong { color: #c04878; font-weight: 700; }
+
+  /* フレーズ表 */
+  table.phrase-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10pt;
+    margin-bottom: 8px;
+  }
+
+  table.phrase-table th {
+    background: #f5d0df;
+    color: #333;
+    font-weight: 700;
+    padding: 5px 8px;
+    text-align: left;
+    border: 1px solid #e0b0c8;
+    font-size: 9pt;
+  }
+
+  table.phrase-table td {
+    padding: 7px 8px;
+    border: 1px solid #e8c8d8;
+    line-height: 1.5;
+    vertical-align: top;
+  }
+
+  table.phrase-table tr:nth-child(even) td { background: #fff8fa; }
+
+  .en { font-size: 11pt; font-weight: 700; color: #222; }
+  .jp { font-size: 9pt; color: #777; margin-top: 2px; }
+
+  ruby rt { font-size: 7pt; color: #c04878; }
+
+  /* 発音メモ */
+  .pronun {
+    background: #f0f5ff;
+    border: 1.5px solid #9ab8e0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 10pt;
+    line-height: 1.9;
+  }
+
+  .pronun .label {
+    font-size: 8pt;
+    font-weight: 700;
+    color: #5b99cc;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+  }
+
+  /* 会話例 */
+  .dialog {
+    border: 2px solid #f0c0d0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    background: #fff8fa;
+    font-size: 10.5pt;
+    line-height: 2.2;
+  }
+
+  .dialog .speaker { font-size: 8.5pt; font-weight: 700; color: #e8729a; }
+  .dialog .speaker.b { color: #5b99cc; }
+
+  /* 問題エリア */
+  .q-block { margin-bottom: 16px; }
+
+  .q-num {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #c04878;
+    margin-bottom: 5px;
+  }
+
+  .q-text {
+    font-size: 10.5pt;
+    line-height: 1.8;
+    margin-bottom: 6px;
+  }
+
+  /* 入力エリア */
+  textarea.ans, input.ans {
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #e0c0cc;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 10.5pt;
+    color: #333;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+
+  textarea.ans { min-height: 60px; }
+  textarea.ans.xl { min-height: 90px; }
+  input.ans { height: 38px; }
+
+  textarea.ans:focus, input.ans:focus {
+    outline: none;
+    border-color: #e8729a;
+    background: #fff8fa;
+  }
+
+  /* 線つなぎ → セレクト形式に変換 */
+  .match-block { display: flex; flex-direction: column; gap: 8px; }
+
+  .match-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10.5pt;
+    flex-wrap: wrap;
+  }
+
+  .match-row .en-side { min-width: 200px; }
+
+  .match-row select {
+    flex: 1;
+    border: 1.5px solid #e0c0cc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 10pt;
+    background: #fff;
+    color: #333;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23e8729a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+  }
+
+  .match-row select:focus { outline: none; border-color: #e8729a; }
+
+  /* 空欄補充 */
+  .fill-text {
+    font-size: 10.5pt;
+    line-height: 3;
+  }
+
+  .fill-text input.inline {
+    border: none;
+    border-bottom: 1.5px solid #e8729a;
+    background: transparent;
+    width: 100px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 10.5pt;
+    text-align: center;
+    padding: 0 4px;
+    color: #333;
+  }
+
+  .fill-text input.inline:focus { outline: none; border-bottom-color: #c04878; }
+
+  /* 選択肢 */
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .choice {
+    border: 1.5px solid #f0c0d0;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 10pt;
+    background: #fff8fa;
+    color: #555;
+  }
+
+  /* 仕切り */
+  .divider {
+    border: none;
+    border-top: 2px dashed #f0c0d0;
+    margin: 24px 0;
+  }
+
+  /* 小テストセクション */
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .quiz-header h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16pt;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .quiz-meta { font-size: 9pt; color: #888; }
+
+  /* 送信ボタン */
+  .submit-area { text-align: center; margin-top: 32px; }
+
+  .submit-btn {
+    background: #e8729a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 14px 48px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14pt;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    letter-spacing: 0.08em;
+  }
+
+  .submit-btn:hover { opacity: 0.85; }
+  .submit-btn:active { opacity: 0.7; }
+
+  .submit-note {
+    font-size: 10pt;
+    color: #aaa;
+    margin-top: 8px;
+  }
+
+  /* 完了メッセージ */
+  .success {
+    display: none;
+    text-align: center;
+    padding: 48px 20px;
+  }
+
+  .success h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20pt;
+    font-weight: 700;
+    color: #e8729a;
+    margin-bottom: 12px;
+  }
+
+  .success p {
+    font-size: 11pt;
+    color: #888;
+    line-height: 1.9;
+  }
+
+  .sticker-area {
+    border: 2px dashed #f0c0d0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 9.5pt;
+    color: #c04878;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <form id="lessonForm" action="https://formspree.io/f/maqakpar" method="POST">
+
+    <!-- 隠しフィールド -->
+    <input type="hidden" name="lesson" value="Lesson 1 — 自己紹介">
+    <input type="hidden" name="生徒名" value="きいちゃん">
+
+    <!-- ヘッダー -->
+    <div class="page-header">
+      <div class="school-name">F&A English School</div>
+      <div class="page-title">Lesson 1：自己<ruby>紹介<rt>しょうかい</rt></ruby> ⭐</div>
+      <div class="page-subtitle">小学生コース（日常会話）</div>
+      <div class="meta-row">
+        <div class="meta-field">
+          <label>日付</label>
+          <input type="text" name="日付" placeholder="＿＿月＿＿日">
+        </div>
+        <div class="meta-field">
+          <label>気持ち</label>
+          <select name="今日の気持ち" style="border:1.5px solid #e0c0cc;border-radius:4px;padding:4px 8px;font-family:'Noto Sans JP',sans-serif;font-size:10pt;background:#fff">
+            <option value="">えらぼう</option>
+            <option value="😊 たのしかった">😊 たのしかった</option>
+            <option value="😐 ふつう">😐 ふつう</option>
+            <option value="😢 むずかしかった">😢 むずかしかった</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 表面：説明 ===== -->
+
+    <div class="section">
+      <div class="section-title">📌 今日のゴール</div>
+      <div class="point">
+        英語で<strong>自己紹介</strong>ができるようになろう！<br>
+        名前・<ruby>年齢<rt>ねんれい</rt></ruby>・好きなことを英語で言えるかな？
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title green">1. 覚えるフレーズ一覧</div>
+      <table class="phrase-table">
+        <tr>
+          <th style="width:45%">英語フレーズ</th>
+          <th style="width:30%">日本語の意味</th>
+          <th>使うタイミング</th>
+        </tr>
+        <tr><td><div class="en">Hi! I'm Kii.</div></td><td>こんにちは！きいです。</td><td>名前を言う</td></tr>
+        <tr><td><div class="en">I'm 10 years old.</div></td><td>私は10歳です。</td><td><ruby>年齢<rt>ねんれい</rt></ruby>を言う</td></tr>
+        <tr><td><div class="en">I'm in 4th grade.</div></td><td>小学4年生です。</td><td>学年を言う</td></tr>
+        <tr><td><div class="en">I love dancing!</div></td><td>ダンスが大好きです！</td><td>好きなことを言う①</td></tr>
+        <tr><td><div class="en">I do track and field.</div></td><td>陸上をやっています。</td><td>好きなことを言う②</td></tr>
+        <tr><td><div class="en">I like watching TikTok.</div></td><td>TikTokを見るのが好きです。</td><td>好きなことを言う③</td></tr>
+        <tr><td><div class="en">My favorite is ___.</div></td><td>私のお気に入りは___です。</td><td>一番好きなものを言う</td></tr>
+        <tr><td><div class="en">What about you?</div></td><td>あなたはどう？</td><td>相手に話をふる</td></tr>
+        <tr><td><div class="en">Nice to meet you!</div></td><td>はじめまして！よろしく！</td><td>自己紹介の<ruby>締め<rt>しめ</rt></ruby></td></tr>
+        <tr><td><div class="en">Please call me Kii.</div></td><td>きいって呼んでね。</td><td>ニックネームを伝える</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title blue">2. 発音チェック 👂</div>
+      <div class="pronun">
+        <div class="label">PRONUNCIATION NOTE</div>
+        <div>・<strong>I'm</strong> → 「アイ アム」ではなく「アイム」とつなげる</div>
+        <div>・<strong>years old</strong> → つなげて「イヤーゾールド」が自然</div>
+        <div>・<strong>track and field</strong> → "and" は軽く「アン」でOK</div>
+        <div>・<strong>What about you?</strong> → 語尾を上げる↑</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title orange">3. 会話の例 💬</div>
+      <div class="dialog">
+        <div><span class="speaker">きいちゃん</span> &nbsp; Hi! I'm Kii. Please call me Kii!</div>
+        <div><span class="speaker b">Friend</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hi Kii! Nice to meet you. How old are you?</div>
+        <div><span class="speaker">きいちゃん</span> &nbsp; I'm 10 years old. I'm in 4th grade.</div>
+        <div><span class="speaker b">Friend</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cool! What do you like to do?</div>
+        <div><span class="speaker">きいちゃん</span> &nbsp; I love dancing! I also do track and field.</div>
+        <div><span class="speaker b">Friend</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Awesome! What about your hobbies?</div>
+        <div><span class="speaker">きいちゃん</span> &nbsp; I like watching TikTok too. What about you?</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ===== 裏面：問題 ===== -->
+
+    <div class="section">
+      <div class="section-title">問題 1 ／ 線でつなごう（プルダウンで選んでね）</div>
+      <div class="q-text">英語に合う日本語の意味を右のプルダウンから選ぼう。</div>
+      <div class="match-block">
+        <div class="match-row">
+          <div class="en-side">① I'm in 4th grade.</div>
+          <select name="問題1-①">
+            <option value="">えらぼう</option>
+            <option>小学4年生です。</option>
+            <option>きいって呼んでね。</option>
+            <option>はじめまして！</option>
+            <option>あなたはどう？</option>
+            <option>ダンスが大好きです！</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="en-side">② I love dancing!</div>
+          <select name="問題1-②">
+            <option value="">えらぼう</option>
+            <option>小学4年生です。</option>
+            <option>きいって呼んでね。</option>
+            <option>はじめまして！</option>
+            <option>あなたはどう？</option>
+            <option>ダンスが大好きです！</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="en-side">③ Nice to meet you!</div>
+          <select name="問題1-③">
+            <option value="">えらぼう</option>
+            <option>小学4年生です。</option>
+            <option>きいって呼んでね。</option>
+            <option>はじめまして！</option>
+            <option>あなたはどう？</option>
+            <option>ダンスが大好きです！</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="en-side">④ What about you?</div>
+          <select name="問題1-④">
+            <option value="">えらぼう</option>
+            <option>小学4年生です。</option>
+            <option>きいって呼んでね。</option>
+            <option>はじめまして！</option>
+            <option>あなたはどう？</option>
+            <option>ダンスが大好きです！</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="en-side">⑤ Please call me Kii.</div>
+          <select name="問題1-⑤">
+            <option value="">えらぼう</option>
+            <option>小学4年生です。</option>
+            <option>きいって呼んでね。</option>
+            <option>はじめまして！</option>
+            <option>あなたはどう？</option>
+            <option>ダンスが大好きです！</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title green">問題 2 ／ （　）に言葉を入れよう</div>
+      <div class="q-text">下の選択肢を参考に、空欄に正しい言葉を入れよう。</div>
+      <div class="fill-text">
+        Hi! I'm <input class="inline" type="text" name="問題2-1" placeholder="　　">. I'm <input class="inline" type="text" name="問題2-2" placeholder="　　"> years old.<br>
+        I'm in <input class="inline" type="text" name="問題2-3" placeholder="　　"> grade. I <input class="inline" type="text" name="問題2-4" placeholder="　　"> dancing!<br>
+        I also do <input class="inline" type="text" name="問題2-5" placeholder="　　"> and field. Nice to <input class="inline" type="text" name="問題2-6" placeholder="　　"> you!
+      </div>
+      <div class="choices">
+        <div class="choice">Kii</div>
+        <div class="choice">10</div>
+        <div class="choice">4th</div>
+        <div class="choice">love</div>
+        <div class="choice">track</div>
+        <div class="choice">meet</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title blue">問題 3 ／ 並べ替えよう</div>
+      <div class="q-block">
+        <div class="q-num">Q1.「TikTokを見るのが好きです。」</div>
+        <div class="q-text">[ TikTok / I / watching / like ]</div>
+        <input class="ans" type="text" name="問題3-1" placeholder="ここに答えを書こう">
+      </div>
+      <div class="q-block">
+        <div class="q-num">Q2.「私のお気に入りはダンスです。」</div>
+        <div class="q-text">[ dancing / favorite / My / is ]</div>
+        <input class="ans" type="text" name="問題3-2" placeholder="ここに答えを書こう">
+      </div>
+      <div class="q-block">
+        <div class="q-num">Q3.「あなたはどう？」</div>
+        <div class="q-text">[ you / about / What ]</div>
+        <input class="ans" type="text" name="問題3-3" placeholder="ここに答えを書こう">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title orange">問題 4 ／ 英語にしてみよう</div>
+      <div class="q-block">
+        <div class="q-num">Q1.「私は小学4年生です。陸上をやっています。」</div>
+        <textarea class="ans" name="問題4-1" placeholder="ここに答えを書こう"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">問題 5 ／ 自分の自己紹介を書いてみよう 💬</div>
+      <div class="q-text">今日習ったフレーズを使って、自分の自己紹介を英語で自由に書いてみよう！</div>
+      <textarea class="ans xl" name="問題5-自己紹介" placeholder="Hi! I'm..."></textarea>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ===== 小テスト ===== -->
+    <div class="quiz-header">
+      <h2>小テスト ／ Lesson 1 復習 ⭐</h2>
+      <div class="quiz-meta">※ Lesson 2 の最初（5分間）に実施</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Part 1 ／ 意味を書こう（各2点 × 4問）</div>
+      <div class="q-block">
+        <div class="q-num">1. I'm in 4th grade.</div>
+        <input class="ans" type="text" name="小テスト-1" placeholder="日本語で書こう">
+      </div>
+      <div class="q-block">
+        <div class="q-num">2. I love dancing!</div>
+        <input class="ans" type="text" name="小テスト-2" placeholder="日本語で書こう">
+      </div>
+      <div class="q-block">
+        <div class="q-num">3. What about you?</div>
+        <input class="ans" type="text" name="小テスト-3" placeholder="日本語で書こう">
+      </div>
+      <div class="q-block">
+        <div class="q-num">4. Please call me Kii.</div>
+        <input class="ans" type="text" name="小テスト-4" placeholder="日本語で書こう">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title green">Part 2 ／ 英語にしよう（各3点 × 2問）</div>
+      <div class="q-block">
+        <div class="q-num">1.「陸上をやっています。」</div>
+        <input class="ans" type="text" name="小テスト-5" placeholder="英語で書こう">
+      </div>
+      <div class="q-block">
+        <div class="q-num">2.「TikTokを見るのが好きです。」</div>
+        <input class="ans" type="text" name="小テスト-6" placeholder="英語で書こう">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title blue">Part 3 ／ 自己紹介を書こう（4点）</div>
+      <div class="q-text">名前・年齢・学年・好きなことを英語で書いてみよう！</div>
+      <textarea class="ans" name="小テスト-7-自己紹介" placeholder="Hi! I'm..." style="min-height:70px"></textarea>
+      <div style="font-size:8.5pt;color:#aaa;margin-top:4px">※ つっかえてもだいじょうぶ！ゆっくりでいいよ。</div>
+    </div>
+
+    <div class="sticker-area">⭐ 全部できたらシールをはろう！</div>
+
+    <div class="submit-area">
+      <button type="submit" class="submit-btn">✉️ 送信する！</button>
+      <div class="submit-note">送信すると先生に届くよ</div>
+    </div>
+
+  </form>
+
+  <div class="success" id="success">
+    <h2>⭐ よくできました！</h2>
+    <p>回答が先生に届いたよ。<br>次のレッスンで会おうね！</p>
+    <div class="sticker-area" style="margin-top:20px">🎉 がんばったね！</div>
+  </div>
+
+</div>
+
+<script>
+  const form = document.getElementById('lessonForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      alert('送信に失敗しました。もう一度試してね。');
+    }
+  });
+</script>
+</body>
+</html>
